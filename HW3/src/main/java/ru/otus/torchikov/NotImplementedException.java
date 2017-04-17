@@ -5,6 +5,6 @@ package ru.otus.torchikov;
  */
 public class NotImplementedException extends RuntimeException {
     public NotImplementedException() {
-        super("The method doesn't implement");
+        super("The method has not been implemented");
     }
 }

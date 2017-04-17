@@ -25,11 +25,7 @@ public class QueueImpl<E> implements Queue<E> {
 
     @SuppressWarnings("unchecked")
     public QueueImpl() {
-        this.size = 16; // Like a most of collections
-        this.array = new Element[size];
-        this.elementCount = 0;
-        this.head = 0;
-        this.tail = -1;
+        this(16);
     }
 
 
