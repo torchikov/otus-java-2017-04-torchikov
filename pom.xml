@@ -13,6 +13,7 @@
         <module>HW2</module>
         <module>HW3</module>
         <module>HW4</module>
+        <module>HW5</module>
     </modules>
 
     <build>
@@ -34,15 +35,21 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>13.0</version>
+            </dependency>
+            <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.12</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>org.jetbrains</groupId>
-                <artifactId>annotations</artifactId>
-                <version>13.0</version>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>2.7.22</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
