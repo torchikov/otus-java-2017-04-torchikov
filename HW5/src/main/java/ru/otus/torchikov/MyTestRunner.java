@@ -30,6 +30,7 @@ public class MyTestRunner {
     private Optional<Method> beforeMethod;
     private Object target;
     private String testResultMessage;
+    private Class<?> currentClass;
 
 
     public MyTestRunner(Class<?>... testClasses) {
@@ -74,14 +75,12 @@ public class MyTestRunner {
 
     private void invokeAllMethods(Class<?> clazz, List<Method> methods) {
         System.out.println("======= Run test in class " + clazz.getName() + " ======");
-        target = getClassInstance(clazz);
+        this.currentClass = clazz;
         registerBeforeAndAfterMethods(clazz);
-        beforeClassMethod.ifPresent(this::invokeMethod);
         methods.forEach(this::invokeTestMethod);
-        afterClassMethod.ifPresent(this::invokeMethod);
     }
 
-    private Object getClassInstance(Class<?> clazz) {
+    protected Object getClassInstance(Class<?> clazz) {
         try {
             return clazz.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
@@ -94,9 +93,12 @@ public class MyTestRunner {
     void invokeTestMethod(Method method) {
         System.out.println("Method " + method.getName() + " result: ");
         this.testResultMessage = "Success";
+        target = getClassInstance(this.currentClass);
+        beforeClassMethod.ifPresent(this::invokeMethod);
         beforeMethod.ifPresent(this::invokeMethod);
         invokeMethod(method);
         afterMethod.ifPresent(this::invokeMethod);
+        afterClassMethod.ifPresent(this::invokeMethod);
         System.out.println(this.testResultMessage);
 
     }

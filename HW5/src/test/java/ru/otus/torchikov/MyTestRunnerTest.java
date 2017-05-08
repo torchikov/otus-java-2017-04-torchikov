@@ -29,16 +29,18 @@ public class MyTestRunnerTest {
         testRunner = spy(new MyTestRunner(Test1.class));
         testRunner.runTests();
         verify(testRunner, times(2)).invokeTestMethod(ArgumentMatchers.any());
-        //1 BeforeClass, 1 AfterClass and 2 tests
-        verify(testRunner, times(4)).invokeMethod(any());
+        //2 BeforeClass, 2 AfterClass and 2 tests
+        verify(testRunner, times(6)).invokeMethod(any());
+        verify(testRunner, times(2)).getClassInstance(any());
     }
 
     @Test
     public void testWithTwoClasses() {
         testRunner = spy(new MyTestRunner(Test1.class, Test2.class));
         testRunner.runTests();
-        //2 BeforeClass, 2 AfterClass and 4 tests
-        verify(testRunner, times(8)).invokeMethod(any());
+        //4 BeforeClass, 4 AfterClass and 4 tests
+        verify(testRunner, times(12)).invokeMethod(any());
+        verify(testRunner, times(4)).getClassInstance(any());
     }
 
     @Test
@@ -46,8 +48,9 @@ public class MyTestRunnerTest {
         testRunner = spy(new MyTestRunner("ru.otus.torchikov.good"));
         testRunner.runTests();
         verify(testRunner, times(4)).invokeTestMethod(any());
-        //Once BeforeClass, Twice Before, Once AfterClass,Twice After, 4 times Tests
-        verify(testRunner, times(10)).invokeMethod(any());
+        //2 BeforeClass, 2 Before, 2 AfterClass,2 After, 4 times Tests
+        verify(testRunner, times(12)).invokeMethod(any());
+        verify(testRunner, times(4)).getClassInstance(any());
     }
 
     @Test
@@ -55,8 +58,9 @@ public class MyTestRunnerTest {
         testRunner = spy(new MyTestRunner("ru.otus.torchikov.goodwithinner"));
         testRunner.runTests();
         verify(testRunner, times(8)).invokeTestMethod(any());
-        //4 BeforeClass, 4 AfterClass, 8 Tests
-        verify(testRunner, times(16)).invokeMethod(any());
+        //8 BeforeClass, 8 AfterClass, 8 Tests
+        verify(testRunner, times(24)).invokeMethod(any());
+        verify(testRunner, times(8)).getClassInstance(any());
     }
 
 
