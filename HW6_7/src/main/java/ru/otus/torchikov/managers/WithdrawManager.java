@@ -3,6 +3,7 @@ package ru.otus.torchikov.managers;
 
 import ru.otus.torchikov.cells.Cell;
 import ru.otus.torchikov.currency.Currency;
+import ru.otus.torchikov.exceptions.CurrencyUnavailableException;
 import ru.otus.torchikov.exceptions.UnsupportedWithdrawOperationException;
 import ru.otus.torchikov.nominals.Nominal;
 import ru.otus.torchikov.withdrawal.WithdrawHandler;
@@ -14,21 +15,17 @@ import java.util.*;
  * Manage withdrawal operations
  */
 public final class WithdrawManager {
-	private static final WithdrawManager MANAGER = new WithdrawManager();
-	private CellManager cellManager = CellManager.getInstance();
+	private CellManager cellManager;
 	private Map<Cell, Long> withdrawMap = new HashMap<>();
     private Map<Currency, List<WithdrawHandler>> handlers = new HashMap<>();
 
-	private WithdrawManager() {
-	}
-
-	public static WithdrawManager getInstance() {
-		return MANAGER;
+	public WithdrawManager(CellManager cellManager) {
+		this.cellManager = cellManager;
 	}
 
     public void createWithdrawHandlers(Currency currency, Set<Cell> cells) {
         List<WithdrawHandler> list = new ArrayList<>();
-        cells.forEach(c -> list.add(new WithdrawHandler(c)));
+        cells.forEach(c -> list.add(new WithdrawHandler(this, c)));
         sortHandlers(list);
         handlers.put(currency, list);
     }
@@ -78,7 +75,7 @@ public final class WithdrawManager {
         boolean isCurrencyExist = cellManager.getAvailableCurrencies().stream()
                 .anyMatch(c -> c.equals(currency));
         if (!isCurrencyExist) {
-            throw new UnsupportedWithdrawOperationException("The ATM doesn't support " + currency.getName());// TODO: 22.05.2017 Write message
+            throw new CurrencyUnavailableException();
         }
     }
 

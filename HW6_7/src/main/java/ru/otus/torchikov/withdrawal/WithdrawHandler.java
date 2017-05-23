@@ -13,11 +13,12 @@ import java.util.Objects;
  * Handle withdraw operations
  */
 public class WithdrawHandler {
-    private WithdrawManager withdrawManager = WithdrawManager.getInstance();
+    private WithdrawManager withdrawManager;
     private WithdrawHandler next;
     private Cell cell;
 
-    public WithdrawHandler(Cell cell) {
+    public WithdrawHandler(WithdrawManager manager, Cell cell) {
+        this.withdrawManager = manager;
         this.cell = cell;
     }
 

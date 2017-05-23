@@ -6,7 +6,7 @@ import ru.otus.torchikov.nominals.Nominal;
 
 /**
  * Created by Torchikov Sergei on 22.05.2017.
- * Class which represents ATM's cell
+ * Class which represents ATMImpl's cell
  */
 public class Cell {
 	private Currency currency;

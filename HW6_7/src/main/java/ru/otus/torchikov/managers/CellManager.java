@@ -4,9 +4,14 @@ package ru.otus.torchikov.managers;
 import ru.otus.torchikov.cells.Cell;
 import ru.otus.torchikov.cells.CellFactory;
 import ru.otus.torchikov.currency.Currency;
+import ru.otus.torchikov.exceptions.CurrencyUnavailableException;
 import ru.otus.torchikov.nominals.Nominal;
+import ru.otus.torchikov.state.DefaultCellsState;
+import ru.otus.torchikov.state.State;
+import ru.otus.torchikov.state.StateCareTacker;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,19 +21,22 @@ import java.util.stream.Collectors;
  * Use for cell managing
  */
 public final class CellManager {
-    private static final CellManager INSTANCE = new CellManager();
     private Map<Currency, Set<Cell>> cells = new HashMap<>();
+    private StateCareTacker<Map<Currency, Set<Cell>>> careTacker = new StateCareTacker<>();
 
-    private CellManager() {
+    public CellManager() {
     }
 
-    public static CellManager getInstance() {
-        return INSTANCE;
+
+    public void createCells(WithdrawManager withdrawManager, Currency... currencies) {
+        for (Currency currency : currencies) {
+            Set<Cell> currentCells = CellFactory.getInstance(currency).getCells(withdrawManager);
+            cells.put(currency, currentCells);
+        }
     }
 
-    public void createCells(Currency currency) {
-        Set<Cell> currentCells = CellFactory.getInstance(currency).getCells();
-        cells.put(currency, currentCells);
+    private Cell copyCell(Cell cell) {
+        return CellFactory.getInstance(cell.getCurrency()).copyCell(cell);
     }
 
     public void addMoney(Currency currency, Nominal nominal, long count) {
@@ -46,21 +54,54 @@ public final class CellManager {
                 .forEach(c -> c.setCount(c.getCount() - count)));
     }
 
-    public long getBalance(Currency currency) {
-        checkIsCurrencyExist(currency);
-        return cells.get(currency).stream()
-                .mapToLong(Cell::getAmount)
-                .sum();
+    public String getBalance() {
+        StringBuilder result = new StringBuilder();
+        for (Currency currency : getAvailableCurrencies()) {
+            long balance = cells.get(currency).stream()
+                    .mapToLong(Cell::getAmount)
+                    .sum();
+            result.append(balance).append(" ").append(currency.getName()).append("\n");
+        }
+        return result.toString();
     }
 
     Set<Currency> getAvailableCurrencies() {
         return cells.keySet();
     }
 
+    Map<Nominal, Long> getAvailableNotes(Currency currency) {
+        return cells.get(currency).stream()
+                .filter(c -> c.getCount() != 0)
+                .collect(Collectors.toMap(Cell::getNominal, Cell::getCount));
+    }
+
+    public void saveDefaultState() {
+        State<Map<Currency, Set<Cell>>> defaultState = new DefaultCellsState();
+        defaultState.setState(deepCopyState(this.cells));
+        careTacker.addState(defaultState);
+    }
+
+    public void restoreDefaultState() {
+        State<Map<Currency, Set<Cell>>> defaultState = careTacker.getState();
+        this.cells = deepCopyState(defaultState.getState());
+    }
+
+    private Map<Currency, Set<Cell>> deepCopyState(Map<Currency, Set<Cell>> state) {
+        Map<Currency, Set<Cell>> result = new HashMap<>();
+        for (Map.Entry<Currency, Set<Cell>> entry : state.entrySet()) {
+            Set<Cell> resultCells = new HashSet<>();
+            for (Cell cell : entry.getValue()) {
+                resultCells.add(copyCell(cell));
+            }
+            result.put(entry.getKey(), resultCells);
+        }
+        return result;
+    }
+
     private void checkIsCurrencyExist(Currency currency) {
         boolean isExist = cells.containsKey(currency);
         if (!isExist) {
-            throw new IllegalArgumentException("The ATM doesn't support " + currency.getName());
+            throw new CurrencyUnavailableException();
         }
     }
 
@@ -73,12 +114,6 @@ public final class CellManager {
             throw new IllegalArgumentException("The currency " + currency.getName() +
                     " doesn't support notes by nominal " + nominal.getNominalValue());
         }
-    }
-
-    Map<Nominal, Long> getAvailableNotes(Currency currency) {
-        return cells.get(currency).stream()
-                .filter(c -> c.getCount() != 0)
-                .collect(Collectors.toMap(Cell::getNominal, Cell::getCount));
     }
 
 
