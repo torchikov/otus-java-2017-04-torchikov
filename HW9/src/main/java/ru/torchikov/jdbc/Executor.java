@@ -1,11 +1,15 @@
 package ru.torchikov.jdbc;
 
-import javax.persistence.Column;
-import java.lang.reflect.Field;
+import ru.torchikov.jdbc.datasets.BaseDataSet;
+import ru.torchikov.jdbc.datasets.EntityColumnName;
+import ru.torchikov.jdbc.datasets.EntityFieldName;
+import ru.torchikov.jdbc.datasets.EntityHolder;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -19,10 +23,10 @@ public class Executor<T extends BaseDataSet> {
         this.connection = connection;
     }
 
-    public Optional<T> executeGet(String query, Class<T> entityClass) throws SQLException, IllegalAccessException, InstantiationException {
+    public Optional<T> executeGet(String query, Class<T> entityClass) throws SQLException, IllegalAccessException, InstantiationException, NoSuchFieldException {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(query);
-        return Optional.ofNullable(getResultSet(entityClass, resultSet));
+        return Optional.ofNullable(constructFromResultSet(entityClass, resultSet));
 
     }
 
@@ -31,17 +35,14 @@ public class Executor<T extends BaseDataSet> {
         return statement.executeUpdate(query);
     }
 
-    private T getResultSet(Class<T> entityClass, ResultSet resultSet) throws SQLException, IllegalAccessException, InstantiationException {
+    private T constructFromResultSet(Class<T> entityClass, ResultSet resultSet) throws SQLException, IllegalAccessException, InstantiationException, NoSuchFieldException {
         if (resultSet.next()) {
             T result = entityClass.newInstance();
-            for (Field field : entityClass.getDeclaredFields()) {
-                boolean accessible = field.isAccessible();
-                field.setAccessible(true);
-                if (field.isAnnotationPresent(Column.class)) {
-                    Column column = field.getAnnotation(Column.class);
-                    field.set(result, resultSet.getObject(column.name()));
-                }
-                field.setAccessible(accessible);
+            Map<EntityFieldName, EntityColumnName> fieldToColumnMapping = EntityHolder.getFieldToColumnMapping(entityClass);
+
+            for (Map.Entry<EntityFieldName, EntityColumnName> entry : fieldToColumnMapping.entrySet()) {
+                Object value = resultSet.getObject(entry.getValue().getName());
+                ReflectionHelper.setFieldValue(entry.getKey().getName(), value, result);
             }
             result.setId(resultSet.getLong("id"));
             return result;

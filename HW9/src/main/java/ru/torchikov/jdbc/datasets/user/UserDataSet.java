@@ -1,6 +1,6 @@
-package ru.torchikov.jdbc.user;
+package ru.torchikov.jdbc.datasets.user;
 
-import ru.torchikov.jdbc.BaseDataSet;
+import ru.torchikov.jdbc.datasets.BaseDataSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

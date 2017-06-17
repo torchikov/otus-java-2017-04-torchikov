@@ -1,4 +1,4 @@
-package ru.torchikov.jdbc;
+package ru.torchikov.jdbc.datasets;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

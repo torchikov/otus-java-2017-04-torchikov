@@ -3,8 +3,9 @@ package ru.torchikov.jdbc;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.torchikov.jdbc.user.UserDAO;
-import ru.torchikov.jdbc.user.UserDataSet;
+import ru.torchikov.jdbc.dao.DAO;
+import ru.torchikov.jdbc.dao.UserDAO;
+import ru.torchikov.jdbc.datasets.user.UserDataSet;
 
 import java.util.Optional;
 
@@ -64,5 +65,18 @@ public class BaseTest {
 	public void getWithNoExistId() throws Exception {
 		Optional<UserDataSet> result = dao.get(3L, UserDataSet.class);
 		assertFalse(result.isPresent());
+	}
+
+	@Test
+	public void saveTwoEntities() throws Exception {
+		UserDataSet mike = new UserDataSet();
+		mike.setName("Mike");
+		mike.setAge(21);
+		assertTrue(dao.save(mike));
+
+		UserDataSet anna = new UserDataSet();
+		anna.setName("Anna");
+		anna.setAge(20);
+		assertTrue(dao.save(anna));
 	}
 }

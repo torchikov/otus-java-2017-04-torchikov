@@ -1,11 +1,10 @@
-package ru.torchikov.jdbc.user;
+package ru.torchikov.jdbc.dao;
 
 import ru.torchikov.jdbc.ConnectionHelper;
-import ru.torchikov.jdbc.DAO;
 import ru.torchikov.jdbc.Executor;
+import ru.torchikov.jdbc.datasets.user.UserDataSet;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Optional;
 
 /**
@@ -15,22 +14,24 @@ import java.util.Optional;
 public class UserDAO implements DAO<UserDataSet> {
 
 	@Override
-	public Optional<UserDataSet> get(long id, Class<UserDataSet> entityClass) throws SQLException, IllegalAccessException, InstantiationException {
+	public Optional<UserDataSet> get(long id, Class<UserDataSet> entityClass){
 		try (Connection connection = ConnectionHelper.getConnection()) {
 			Executor<UserDataSet> executor = new Executor<>(connection);
             String query = getLoadSqlQuery(id, entityClass);
             return executor.executeGet(query, entityClass);
+		} catch (Throwable e) {
+			throw new RuntimeException(e);
 		}
 	}
 
 	@Override
-	public boolean save(UserDataSet dataSet) throws SQLException {
+	public boolean save(UserDataSet dataSet){
 		try (Connection connection = ConnectionHelper.getConnection()) {
 			Executor<UserDataSet> executor = new Executor<>(connection);
 			String query = getSaveSqlQuery(dataSet);
 			int updatedRowsCount = executor.executeUpdate(query);
 			return updatedRowsCount > 0;
-		} catch (IllegalAccessException e) {
+		} catch (Throwable e) {
 			throw new RuntimeException(e);
 		}
 	}
