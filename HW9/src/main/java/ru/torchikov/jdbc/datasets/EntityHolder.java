@@ -8,6 +8,7 @@ import javax.persistence.Table;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by sergei on 17.06.17
@@ -38,6 +39,10 @@ public final class EntityHolder {
             throw new IllegalArgumentException(entityClass.getName() + " isn't an entity or wasn't put to entity map");
         }
         return fieldToColumnMap;
+    }
+
+    public static Set<Class<? extends BaseDataSet>> getEntityClasses() {
+        return entityToTableMap.keySet();
     }
 
     private static void putEntity(Class<? extends BaseDataSet> entityClass) {

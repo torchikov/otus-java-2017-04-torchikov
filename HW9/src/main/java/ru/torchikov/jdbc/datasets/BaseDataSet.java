@@ -1,17 +1,18 @@
 package ru.torchikov.jdbc.datasets;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by Torchikov Sergei on 07.06.2017.
  * Base class for all entities
  */
+@MappedSuperclass
 public class BaseDataSet {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@Column(name = "id")
 
 	public long getId() {
 		return id;

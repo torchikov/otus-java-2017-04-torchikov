@@ -1,5 +1,6 @@
 package ru.torchikov.jdbc.datasets.user;
 
+import org.hibernate.annotations.Fetch;
 import ru.torchikov.jdbc.datasets.BaseDataSet;
 
 import javax.persistence.Column;
@@ -21,6 +22,11 @@ public class UserDataSet extends BaseDataSet {
 	private int age;
 
 	public UserDataSet() {
+	}
+
+	public UserDataSet(String name, int age) {
+		this.name = name;
+		this.age = age;
 	}
 
 	public String getName() {

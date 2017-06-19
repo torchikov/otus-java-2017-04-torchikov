@@ -6,6 +6,8 @@ import org.junit.Test;
 import ru.torchikov.jdbc.dao.DAO;
 import ru.torchikov.jdbc.dao.UserDAO;
 import ru.torchikov.jdbc.datasets.user.UserDataSet;
+import ru.torchikov.jdbc.dbservice.CustomOrmDBService;
+import ru.torchikov.jdbc.dbservice.DBService;
 
 import java.util.Optional;
 
@@ -16,11 +18,11 @@ import static org.junit.Assert.*;
  * Tests
  */
 public class BaseTest {
-	private DAO<UserDataSet> dao;
+	private DBService dbService;
 
 	@Before
 	public void setUp() throws Exception {
-		dao = new UserDAO();
+		dbService = new CustomOrmDBService();
 		TestHelper.createUserTable();
 		TestHelper.addUserToDb("Anna", 19);
 		TestHelper.addUserToDb("Peter", 27);
@@ -33,50 +35,39 @@ public class BaseTest {
 
 	@Test
 	public void save() throws Exception {
-        UserDataSet user = new UserDataSet();
-        user.setName("Mike");
-        user.setAge(21);
-        assertTrue(dao.save(user));
+        UserDataSet user = new UserDataSet("Mike", 21);
+        assertTrue(dbService.save(user));
 	}
 
 	@Test
 	public void get() throws Exception {
-		Optional<UserDataSet> userDataSet = dao.get(1L, UserDataSet.class);
-		assertTrue(userDataSet.isPresent());
-		UserDataSet user = userDataSet.get();
+		UserDataSet user = dbService.getById(1L, UserDataSet.class);
+		assertNotNull(user);
 		assertEquals("Anna", user.getName());
 		assertEquals(19, user.getAge());
 	}
 
 	@Test
 	public void saveAndLoad() throws Exception {
-		UserDataSet user = new UserDataSet();
-        user.setName("Mike");
-        user.setAge(21);
-        assertTrue(dao.save(user));
-		Optional<UserDataSet> result = dao.get(3L, UserDataSet.class);
-		assertTrue(result.isPresent());
-		UserDataSet mike = result.get();
-		assertEquals(user.getName(), mike.getName());
-		assertEquals(user.getAge(), mike.getAge());
+		UserDataSet user = new UserDataSet("Mike", 21);
+        assertTrue(dbService.save(user));
+		UserDataSet result = dbService.getById(3L, UserDataSet.class);
+		assertNotNull(result);
+		assertEquals(user.getName(), result.getName());
+		assertEquals(user.getAge(), result.getAge());
 	}
 
-	@Test
+	@Test(expected = ObjectNotFoundException.class)
 	public void getWithNoExistId() throws Exception {
-		Optional<UserDataSet> result = dao.get(3L, UserDataSet.class);
-		assertFalse(result.isPresent());
+		dbService.getById(3L, UserDataSet.class);
 	}
 
 	@Test
 	public void saveTwoEntities() throws Exception {
-		UserDataSet mike = new UserDataSet();
-		mike.setName("Mike");
-		mike.setAge(21);
-		assertTrue(dao.save(mike));
+		UserDataSet mike = new UserDataSet("Mike", 21);
+		assertTrue(dbService.save(mike));
 
-		UserDataSet anna = new UserDataSet();
-		anna.setName("Anna");
-		anna.setAge(20);
-		assertTrue(dao.save(anna));
+		UserDataSet anna = new UserDataSet("Anna", 21);
+		assertTrue(dbService.save(anna));
 	}
 }
