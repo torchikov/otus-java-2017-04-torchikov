@@ -32,7 +32,7 @@ public class CustomCacheEngine implements CacheEngine<UserDataSet>{
     }
 
     @Override
-    public void put(UserDataSet dataSet) {
+    public synchronized void put(UserDataSet dataSet) {
         if (elements.size() == maxElements) {
             Long firsKey = elements.keySet().iterator().next();
             elements.remove(firsKey);
@@ -71,7 +71,7 @@ public class CustomCacheEngine implements CacheEngine<UserDataSet>{
 
     @Override
     @Nullable
-    public UserDataSet get(Long key) {
+    public synchronized UserDataSet get(Long key) {
         SoftReference<CacheElement<UserDataSet>> cacheElement = elements.get(key);
 
         if (cacheElement == null) {
@@ -91,17 +91,17 @@ public class CustomCacheEngine implements CacheEngine<UserDataSet>{
     }
 
     @Override
-    public void remove(Long key) {
+    public synchronized void remove(Long key) {
         elements.remove(key);
     }
 
     @Override
-    public int getHitCount() {
+    public synchronized int getHitCount() {
         return this.hits;
     }
 
     @Override
-    public int getMissCount() {
+    public synchronized  int getMissCount() {
         return this.miss;
     }
 
