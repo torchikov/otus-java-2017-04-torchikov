@@ -1,6 +1,8 @@
 package ru.torchikov.jdbc.datasets;
 
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import ru.torchikov.jdbc.datasets.base.BaseDataSet;
 
 import javax.persistence.Column;
@@ -12,6 +14,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "phones")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "phones")
 public class PhoneDataSet extends BaseDataSet {
     @Column(name = "code")
     private int code;

@@ -1,9 +1,18 @@
 package ru.torchikov.jdbc.datasets;
 
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import ru.torchikov.jdbc.datasets.base.BaseDataSet;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.List;
 
 /**
@@ -12,6 +21,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "users")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "users")
 public class UserDataSet extends BaseDataSet {
 
 	@Column(name = "name")

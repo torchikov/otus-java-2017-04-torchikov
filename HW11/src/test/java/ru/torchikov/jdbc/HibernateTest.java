@@ -44,7 +44,7 @@ public class HibernateTest {
     @Test
     public void save() {
         long id = dbService.save(user);
-//        assertTrue(result);
+        assertEquals(1L, id);
     }
 
     @Test
@@ -59,5 +59,15 @@ public class HibernateTest {
         assertEquals(123456, address.getZip());
         List<PhoneDataSet> phones = user.getPhones();
         assertEquals(2, phones.size());
+    }
+
+    @Test
+    public void cacheTest() {
+        long id = dbService.save(user);
+        assertEquals(1L, id);
+        UserDataSet user = dbService.getById(1L, UserDataSet.class);
+        assertEquals("Mike", user.getName());
+        user = dbService.getById(1L, UserDataSet.class);
+        assertEquals("Mike", user.getName());
     }
 }
