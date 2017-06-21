@@ -10,6 +10,7 @@ import java.util.function.Function;
 
 /**
  * Created by sergei on 21.06.17.
+ * Custom implementation of cache engine
  */
 public class CustomCacheEngine implements CacheEngine<UserDataSet>{
 
@@ -106,7 +107,7 @@ public class CustomCacheEngine implements CacheEngine<UserDataSet>{
     }
 
     @Override
-    public void dispose() {
+    public synchronized void dispose() {
         elements.clear();
         hits = 0;
         miss = 0;
