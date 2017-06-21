@@ -16,7 +16,8 @@
         <module>HW5</module>
         <module>HW6_7</module>
         <module>HW8</module>
-        <module>HW9</module>
+        <module>HW9_10</module>
+        <module>HW11</module>
     </modules>
 
     <build>
