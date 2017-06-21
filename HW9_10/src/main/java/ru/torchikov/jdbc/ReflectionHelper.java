@@ -9,6 +9,7 @@ import java.util.Map;
  * Created by sergei on 17.06.17.
  *
  */
+@SuppressWarnings("Duplicates")
 public final class ReflectionHelper {
     private ReflectionHelper() {
     }

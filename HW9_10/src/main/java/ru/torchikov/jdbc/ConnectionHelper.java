@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
  * Created by Torchikov Sergei on 07.06.2017.
  * Provide a connection to the database
  */
+@SuppressWarnings("Duplicates")
 public final class ConnectionHelper {
 	private ConnectionHelper() {
 	}

@@ -16,6 +16,7 @@ import java.util.Optional;
  * Created by Torchikov Sergei on 07.06.2017.
  * Executor for SQL queries
  */
+@SuppressWarnings("Duplicates")
 public class Executor<T extends BaseDataSet> {
     private final Connection connection;
 

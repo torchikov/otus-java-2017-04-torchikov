@@ -16,6 +16,7 @@ import java.util.function.Function;
 /**
  * Created by sergei on 19.06.17.
  */
+@SuppressWarnings("Duplicates")
 public class HiberanteDBService implements DBService {
     private SessionFactory sessionFactory;
 

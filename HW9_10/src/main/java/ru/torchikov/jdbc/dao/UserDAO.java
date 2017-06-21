@@ -11,6 +11,7 @@ import java.util.Optional;
  * Created by Torchikov Sergei on 07.06.2017.
  * DAO for users
  */
+@SuppressWarnings("Duplicates")
 public class UserDAO implements DAO<UserDataSet> {
 
 	@Override

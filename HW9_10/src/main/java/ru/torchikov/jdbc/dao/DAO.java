@@ -13,6 +13,7 @@ import java.util.Optional;
  * Created by Torchikov Sergei on 07.06.2017.
  * General interface for all DAO
  */
+@SuppressWarnings("Duplicates")
 public interface DAO<T extends BaseDataSet> {
     Optional<T> get(long id, Class<T> entityClass);
 
