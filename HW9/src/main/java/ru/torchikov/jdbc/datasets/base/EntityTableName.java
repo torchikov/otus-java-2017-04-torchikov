@@ -1,4 +1,4 @@
-package ru.torchikov.jdbc.datasets;
+package ru.torchikov.jdbc.datasets.base;
 
 /**
  * Created by sergei on 17.06.17.

@@ -3,13 +3,9 @@ package ru.torchikov.jdbc;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.torchikov.jdbc.dao.DAO;
-import ru.torchikov.jdbc.dao.UserDAO;
-import ru.torchikov.jdbc.datasets.user.UserDataSet;
+import ru.torchikov.jdbc.datasets.UserDataSet;
 import ru.torchikov.jdbc.dbservice.CustomOrmDBService;
 import ru.torchikov.jdbc.dbservice.DBService;
-
-import java.util.Optional;
 
 import static org.junit.Assert.*;
 

@@ -1,10 +1,10 @@
 package ru.torchikov.jdbc.dao;
 
-import ru.torchikov.jdbc.datasets.EntityColumnName;
-import ru.torchikov.jdbc.datasets.EntityFieldName;
-import ru.torchikov.jdbc.datasets.EntityHolder;
+import ru.torchikov.jdbc.datasets.base.EntityColumnName;
+import ru.torchikov.jdbc.datasets.base.EntityFieldName;
+import ru.torchikov.jdbc.datasets.base.EntityHolder;
 import ru.torchikov.jdbc.ReflectionHelper;
-import ru.torchikov.jdbc.datasets.BaseDataSet;
+import ru.torchikov.jdbc.datasets.base.BaseDataSet;
 
 import java.util.Map;
 import java.util.Optional;

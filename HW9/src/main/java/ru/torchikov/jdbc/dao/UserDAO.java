@@ -2,7 +2,7 @@ package ru.torchikov.jdbc.dao;
 
 import ru.torchikov.jdbc.ConnectionHelper;
 import ru.torchikov.jdbc.Executor;
-import ru.torchikov.jdbc.datasets.user.UserDataSet;
+import ru.torchikov.jdbc.datasets.UserDataSet;
 
 import java.sql.Connection;
 import java.util.Optional;

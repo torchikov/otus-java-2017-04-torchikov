@@ -1,6 +1,8 @@
-package ru.torchikov.jdbc.datasets;
+package ru.torchikov.jdbc.datasets.base;
 
-import ru.torchikov.jdbc.datasets.user.UserDataSet;
+import ru.torchikov.jdbc.datasets.AddressDataSet;
+import ru.torchikov.jdbc.datasets.PhoneDataSet;
+import ru.torchikov.jdbc.datasets.UserDataSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +25,8 @@ public final class EntityHolder {
 
     static {
         putEntity(UserDataSet.class);
+        putEntity(AddressDataSet.class);
+        putEntity(PhoneDataSet.class);
     }
 
     public static String getTableName(Class<? extends BaseDataSet> entityClass) {

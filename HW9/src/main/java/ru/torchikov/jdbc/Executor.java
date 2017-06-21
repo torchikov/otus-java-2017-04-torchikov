@@ -1,9 +1,9 @@
 package ru.torchikov.jdbc;
 
-import ru.torchikov.jdbc.datasets.BaseDataSet;
-import ru.torchikov.jdbc.datasets.EntityColumnName;
-import ru.torchikov.jdbc.datasets.EntityFieldName;
-import ru.torchikov.jdbc.datasets.EntityHolder;
+import ru.torchikov.jdbc.datasets.base.BaseDataSet;
+import ru.torchikov.jdbc.datasets.base.EntityColumnName;
+import ru.torchikov.jdbc.datasets.base.EntityFieldName;
+import ru.torchikov.jdbc.datasets.base.EntityHolder;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

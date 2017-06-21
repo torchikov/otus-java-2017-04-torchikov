@@ -1,6 +1,6 @@
 package ru.torchikov.jdbc.dbservice;
 
-import ru.torchikov.jdbc.datasets.BaseDataSet;
+import ru.torchikov.jdbc.datasets.base.BaseDataSet;
 
 /**
  * Created by sergei on 19.06.17.

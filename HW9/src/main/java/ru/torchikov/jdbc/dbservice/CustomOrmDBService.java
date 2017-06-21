@@ -3,7 +3,7 @@ package ru.torchikov.jdbc.dbservice;
 import ru.torchikov.jdbc.ObjectNotFoundException;
 import ru.torchikov.jdbc.dao.DAO;
 import ru.torchikov.jdbc.dao.DAOFactory;
-import ru.torchikov.jdbc.datasets.BaseDataSet;
+import ru.torchikov.jdbc.datasets.base.BaseDataSet;
 
 import java.util.Optional;
 

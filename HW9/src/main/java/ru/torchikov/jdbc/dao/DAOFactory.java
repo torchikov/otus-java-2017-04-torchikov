@@ -1,7 +1,7 @@
 package ru.torchikov.jdbc.dao;
 
-import ru.torchikov.jdbc.datasets.BaseDataSet;
-import ru.torchikov.jdbc.datasets.user.UserDataSet;
+import ru.torchikov.jdbc.datasets.base.BaseDataSet;
+import ru.torchikov.jdbc.datasets.UserDataSet;
 
 /**
  * Created by sergei on 19.06.17.

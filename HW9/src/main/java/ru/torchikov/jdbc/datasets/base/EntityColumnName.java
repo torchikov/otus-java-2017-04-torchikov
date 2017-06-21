@@ -1,13 +1,13 @@
-package ru.torchikov.jdbc.datasets;
+package ru.torchikov.jdbc.datasets.base;
 
 /**
  * Created by sergei on 17.06.17.
- * Field name holder
+ * Column name holder
  */
-public class EntityFieldName {
+public class EntityColumnName {
     private String name;
 
-    EntityFieldName(String name) {
+    EntityColumnName(String name) {
         this.name = name;
     }
 

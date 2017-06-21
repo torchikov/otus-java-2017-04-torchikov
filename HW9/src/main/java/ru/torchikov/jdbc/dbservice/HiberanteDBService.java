@@ -6,8 +6,8 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-import ru.torchikov.jdbc.datasets.BaseDataSet;
-import ru.torchikov.jdbc.datasets.EntityHolder;
+import ru.torchikov.jdbc.datasets.base.BaseDataSet;
+import ru.torchikov.jdbc.datasets.base.EntityHolder;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;

@@ -1,4 +1,4 @@
-package ru.torchikov.jdbc.datasets;
+package ru.torchikov.jdbc.datasets.base;
 
 import javax.persistence.*;
 
