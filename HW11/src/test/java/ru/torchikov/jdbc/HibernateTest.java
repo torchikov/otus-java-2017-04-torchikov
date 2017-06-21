@@ -1,13 +1,13 @@
 package ru.torchikov.jdbc;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
 import ru.torchikov.jdbc.datasets.AddressDataSet;
 import ru.torchikov.jdbc.datasets.PhoneDataSet;
 import ru.torchikov.jdbc.datasets.UserDataSet;
 import ru.torchikov.jdbc.dbservice.DBService;
 import ru.torchikov.jdbc.dbservice.HiberanteDBService;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,8 +43,8 @@ public class HibernateTest {
 
     @Test
     public void save() {
-        boolean result = dbService.save(user);
-        assertTrue(result);
+        long id = dbService.save(user);
+//        assertTrue(result);
     }
 
     @Test
