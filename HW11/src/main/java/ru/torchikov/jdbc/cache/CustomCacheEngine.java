@@ -14,9 +14,9 @@ import java.util.function.Function;
  */
 public class CustomCacheEngine implements CacheEngine<UserDataSet>{
 
-    private final int maxElements;
-    private final long lifeTimeMs;
-    private final long idleTimeMs;
+    private int maxElements;
+    private long lifeTimeMs;
+    private long idleTimeMs;
     private final boolean isEternal;
 
     private int hits = 0;
@@ -107,10 +107,45 @@ public class CustomCacheEngine implements CacheEngine<UserDataSet>{
     }
 
     @Override
+    public int getMaxElements() {
+        return maxElements;
+    }
+
+    @Override
+    public void setMaxElements(int maxElements) {
+        this.maxElements = maxElements;
+    }
+
+    @Override
+    public long getLifeTimeMs() {
+        return lifeTimeMs;
+    }
+
+    @Override
+    public void setLifeTimeMs(long lifeTimeMs) {
+        this.lifeTimeMs = lifeTimeMs;
+    }
+
+    @Override
+    public long getIdleTimeMs() {
+        return idleTimeMs;
+    }
+
+    @Override
+    public void setIdleTimeMs(long idleTimeMs) {
+        this.idleTimeMs = idleTimeMs;
+    }
+
+    @Override
     public synchronized void dispose() {
         elements.clear();
         hits = 0;
         miss = 0;
+    }
+
+    @Override
+    public boolean isEtermal() {
+        return this.isEternal;
     }
 
     private TimerTask getTimerTask(final Long key, Function<CacheElement<UserDataSet>, Instant> timeFunction) {

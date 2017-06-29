@@ -17,5 +17,19 @@ public interface CacheEngine<V> {
 
     int getMissCount();
 
+    int getMaxElements();
+
+    void setMaxElements(int maxElements);
+
+    long getLifeTimeMs();
+
+    void setLifeTimeMs(long lifeTimeMs);
+
+    long getIdleTimeMs();
+
+    void setIdleTimeMs(long idleTimeMs);
+
     void dispose();
+
+    boolean isEtermal();
 }
