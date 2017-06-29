@@ -27,14 +27,14 @@ public class BaseTest {
     @Before
     public void setUp() throws Exception {
         dbService = new CustomOrmDBService();
-        TestHelper.createUserTable();
+        TestHelper.createTableUsers();
         TestHelper.addUserToDb("Anna", 19);
         TestHelper.addUserToDb("Peter", 27);
     }
 
     @After
     public void tearDown() throws Exception {
-        TestHelper.dropUserTable();
+        TestHelper.dropRableUsers();
     }
 
     @Test

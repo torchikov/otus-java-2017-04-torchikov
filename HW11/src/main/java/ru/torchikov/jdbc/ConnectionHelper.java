@@ -11,16 +11,18 @@ import java.util.ResourceBundle;
  */
 @SuppressWarnings("Duplicates")
 public final class ConnectionHelper {
-	private ConnectionHelper() {
-	}
+    private ConnectionHelper() {
+    }
 
-	public static Connection getConnection() {
-		try {
-			ResourceBundle dbResource = ResourceBundle.getBundle("db");
-			String dbUrl = dbResource.getString("url");
-			return DriverManager.getConnection(dbUrl);
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static Connection getConnection() {
+        try {
+            ResourceBundle dbResource = ResourceBundle.getBundle("db");
+            String dbUrl = dbResource.getString("url");
+            String username = dbResource.getString("username");
+            String password = dbResource.getString("password");
+            return DriverManager.getConnection(dbUrl, username, password);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -11,15 +11,17 @@ final class TestHelper {
 	private TestHelper() {
 	}
 
-	static void createUserTable() throws Exception {
-		String query = "CREATE TABLE users (id BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1), " +
-				"name VARCHAR(255) DEFAULT NULL, " +
-				"age INTEGER DEFAULT NULL)";
+	static void createTableUsers() throws Exception {
+		String query = "create table users(" +
+				"ID bigint not null auto_increment," +
+				" NAME varchar(20) not null," +
+				" AGE int(3) not null, " +
+				" primary key (ID))";
 		execute(query);
 	}
 
-	static void dropUserTable() throws Exception {
-		String query = "DROP TABLE users";
+	static void dropRableUsers() throws Exception {
+		String query = "drop table if exists users";
 		execute(query);
 	}
 
