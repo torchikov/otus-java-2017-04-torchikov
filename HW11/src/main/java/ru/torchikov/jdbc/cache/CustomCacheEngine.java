@@ -1,6 +1,6 @@
 package ru.torchikov.jdbc.cache;
 
-import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.Nullable;
 import ru.torchikov.jdbc.datasets.UserDataSet;
 
 import java.lang.ref.SoftReference;

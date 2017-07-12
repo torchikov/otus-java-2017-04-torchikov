@@ -16,6 +16,7 @@ public final class ConnectionHelper {
 
     public static Connection getConnection() {
         try {
+            DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             ResourceBundle dbResource = ResourceBundle.getBundle("db");
             String dbUrl = dbResource.getString("url");
             String username = dbResource.getString("username");

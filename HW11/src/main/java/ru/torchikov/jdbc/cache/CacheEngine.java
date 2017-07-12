@@ -1,6 +1,7 @@
 package ru.torchikov.jdbc.cache;
 
-import com.sun.istack.internal.Nullable;
+
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by sergei on 21.06.17.

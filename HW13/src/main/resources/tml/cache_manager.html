@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Cache manager</title>
+    </head>
+    <body>
+        <p>Welcome, ${username}</p>
+        <p>Cache statistics:</p>
+        <br>Max elements count: ${getMaxElementCount}
+        <br>Hits: ${getHits}
+        <br>Misses: ${getMisses}
+        <br>Life time in ms: ${getLifeTimeMs}
+        <br>Idle time in ms: ${getIdleTimeMs}
+        <br>Is eternal: ${isEternal?string('yes','no')}
+    </body>
+</html>
