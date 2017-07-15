@@ -13,5 +13,9 @@ public class Main {
                 .sorted()
                 .toArray();
         System.out.println(Arrays.toString(result));
+
+        //Совсем уж просто:
+        Arrays.parallelSort(array);
+        System.out.println(Arrays.toString(array));
     }
 }
