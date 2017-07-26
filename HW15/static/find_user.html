@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Поиск пользователя</title>
+    <script type="text/javascript">
+        var ws;
+
+        function init() {
+            ws = new WebSocket("ws://localhost:8080/load");
+
+            ws.onopen = function (event) {
+
+            };
+            ws.onmessage = function (event) {
+                var user = JSON.parse(event.data);
+                if (user === null) {
+                    alert("Пользователь не найден")
+                }
+                var $userId = document.getElementById("userId");
+                var $userName = document.getElementById("userName");
+                var $userAge = document.getElementById("userAge");
+
+                $userId.innerHTML = user.id;
+                $userName.innerHTML = user.name;
+                $userAge.innerHTML = user.age;
+            };
+            ws.onclose = function (event) {
+
+            }
+        }
+
+        function sendMessage() {
+            var userId = document.getElementById("searchId");
+            var searchId = userId.value;
+            if (searchId === "") {
+                alert("Неверный формат Id " + searchId + ". Id должен быть цифрой")
+            } else {
+                ws.send(userId.value);
+                userId.value = "";
+            }
+        }
+    </script>
+</head>
+<body onload="init()">
+<h1>Поиск пользователя</h1>
+<form>
+    ID: <input type="number" name="id" title="ID" id="searchId"/>
+    <input type="submit" value="поиск" onclick="sendMessage()">
+</form>
+
+
+<br/>
+<div>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Возраст</th>
+        </tr>
+        <tr>
+            <td id="userId"></td>
+            <td id="userName"></td>
+            <td id="userAge"></td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
